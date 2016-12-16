@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="ubApp">
+<head>
+	<meta charset="UTF-8">
+	<title>angular test</title>
+	<link rel="stylesheet" href="../urlbox.css">
+</head>
+<body>
+	<div id="content">
+		<div class="url-box" ng-controller="ubCtrl">
+			<div class="add-form">
+				<div class="form-line">
+					<label for="url_input">URL&ensp;:</label>
+					<input type="text" id="url_input" ng-model="url.link" placeholder="请输入url">
+				</div>
+				<div class="form-line">
+					<label for="desc_input">描述:</label>
+					<input type="text" id="desc_input" ng-model="url.desc" placeholder="请输入描述">
+				</div>
+				<div class="form-line">
+					<div class="styled-select blue semi-square">
+						<select id="type_input" ng-model="listType" ng-init="listType=types2Select[0]" ng-options="type.label for type in types2Select" ng-change="selectType()">
+						</select>
+					</div>
+				</div>
+				<div class="form-line" ng-class="{hidden:!showNewType}">
+					<label for="new_type_input">类型:</label>
+					<input type="text" id="new_type_input" ng-model="url.type" placeholder="请输入新类型">
+				</div>
+				<button class="btn" ng-click="addUrl(url)">提交</button>
+			</div>
+			<div class="all-list">
+				<div class="list-type">
+					<a class="type-item" ng-repeat="type in types" ng-class="{active:currentType==type}"  ng-click="showList(type)">{{type}}</a>
+				</div>
+				<div class="list">
+					<p class="item" ng-repeat="item in list">
+						<a href="{{item.link}}">{{item.desc}}</a>
+						<a class="close" ng-click="deleteItem(item.id)">删除</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="../lib/angular.js"></script>
+	<script src="js/urlbox.js"></script>
+</body>
+</html>

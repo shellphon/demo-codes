@@ -1,0 +1,1 @@
+const testFun = (parameter) => ({result: parameter})
