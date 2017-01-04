@@ -1,13 +1,10 @@
 <template>
   <li class="todo-item" :class='{editing: editable}'>
     <div class="view">
-      <input type="checkbox" class="cb" :checked="item.done" @change="toggleTodo(item)">
+      <input type="checkbox" class="cb" v-detect="item.done"  @change="toggleTodo(item)">
       <label v-on:dblclick="toEdit()">{{item.desc}}</label>
       <a class="delete" @click="deleteItem">×</a>
     </div>
-    <!--
-    <input type="text" class="edit-input">
-    -->
     <div class="col-sm-10 edit-input">
       <input type="text" class="form-control" v-auto-focus="editable" :value="item.desc"
       @keyup.enter="doneEdit"
@@ -19,12 +16,13 @@
 
 <script>
 import Vue from 'vue';
+/*
 Vue.directive('auto-focus', function(el, binding){
   //console.log(binding.value);
   if(binding.value){
     el.focus();
   }
-});
+});*/
 export default {
   name: 'TodoItem',
   props: ['item'],
@@ -34,8 +32,23 @@ export default {
       editable:false
     }
   },
+  directives:{
+    detect:function(el, binding){
+       // console.log(el.checked, binding.value)
+        el.checked = binding.value
+    },
+    'auto-focus': function(el, binding){
+      //console.log(binding.value);
+      if(binding.value){
+        el.focus();
+      }
+    }
+  },
+  updated:function(){
+    //console.log(this.item)
+  },
   created:function(){
-    
+    //console.log(this.item.done);
   },
   methods:{
     doneEdit (e) {
@@ -64,7 +77,7 @@ export default {
     },
     toggleTodo (){
       const todo = this.item;
-     /*console.log('组件点击',todo.done);*/
+      //console.log(todo.desc ,todo.done);
       this.$store.dispatch('toggleTodo', todo);
     }
   }
