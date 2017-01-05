@@ -1,7 +1,7 @@
 <template>
   <li class="todo-item" :class='{editing: editable}'>
     <div class="view">
-      <input type="checkbox" class="cb" v-detect="item.done"  @change="toggleTodo(item)">
+      <input type="checkbox" class="cb" v-detect="item.done" @change="toggleTodo(item)">
       <label v-on:dblclick="toEdit()">{{item.desc}}</label>
       <a class="delete" @click="deleteItem">×</a>
     </div>
@@ -16,13 +16,7 @@
 
 <script>
 import Vue from 'vue';
-/*
-Vue.directive('auto-focus', function(el, binding){
-  //console.log(binding.value);
-  if(binding.value){
-    el.focus();
-  }
-});*/
+
 export default {
   name: 'TodoItem',
   props: ['item'],
@@ -43,12 +37,6 @@ export default {
         el.focus();
       }
     }
-  },
-  updated:function(){
-    //console.log(this.item)
-  },
-  created:function(){
-    //console.log(this.item.done);
   },
   methods:{
     doneEdit (e) {
@@ -77,7 +65,6 @@ export default {
     },
     toggleTodo (){
       const todo = this.item;
-      //console.log(todo.desc ,todo.done);
       this.$store.dispatch('toggleTodo', todo);
     }
   }

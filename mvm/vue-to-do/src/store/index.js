@@ -12,6 +12,15 @@ const gtoDos = (function(){
 		this.init();
 		return this;
 	};
+	function copyArr(arr){
+		return arr.map((e)=>{
+			if(typeof e === 'object'){
+				return Object.assign({},e)
+			}else{
+				return e
+			}
+		})
+	}
 	obj.prototype = {
 		init(){
 
@@ -21,7 +30,7 @@ const gtoDos = (function(){
 			}
 		},
 		getTodos() {
-			return todos;
+			return copyArr(todos)//.slice();
 		},
 		addTodo(todo) {
 			todos.push(todo);
@@ -60,6 +69,7 @@ const gtoDos = (function(){
 	};
 	return new obj();
 })();
+
 export default new Vuex.Store({
 	state: {
 		todos:[
@@ -71,34 +81,48 @@ export default new Vuex.Store({
 		getTodos (state, list){
 			var list = list.sort((a,b)=>a.id<b.id);
 			idIndex = list.length && list[0].id || 0;
-			state.todos = list.slice(0);
+			state.todos = list;
 		},
 		addTodo (state, one){
-			state.todos.unshift(one);
+			state.todos.unshift(Object.assign({}, one));
 		},
 		editTodo (state, one){
-			state.todos = state.todos.map(e=>{
+			let index=-1;
+			state.todos.forEach((e,i)=>{
 				if(e.id==one.id){
-					e = one;
+					index = i
 				}
-				return e;
 			})
+			index>-1?state.todos[index].desc = one.desc:''
 		},
 		toggleTodo (state, item){
-			
+			let index=-1,
+				status;
+			state.todos.forEach((e,i)=>{
+				if(e.id==item.id){
+					index = i
+					status = e.done
+				}
+			})
+			//console.log('mutations ',index ,status, item.done)
+			index>-1?state.todos[index].done = !status:''
 		},
 		deleteTodo (state, item){
-			state.todos = state.todos.filter(e=>{
+			let index = -1;
+			state.todos.filter((e,i)=>{
 				if(e.id==item.id){
-					return false;
+					index = i
 				}
-				return true;
 			})
+			index>-1?state.todos.splice(index,1):''
 		}
 	},
 	getters:{
 		doneTodos: state=>{
-			return state.todos.filter(todo => todo.done)
+			//console.log('get dones')
+			let done = state.todos.filter(todo => todo.done)
+			//console.log(done);
+			return done
 		},
 		undoneTodos: state=>{
 			return state.todos.filter(todo => !todo.done)
@@ -106,69 +130,23 @@ export default new Vuex.Store({
 	},
 
 	actions:{
-		/*fetchTodos ({commit}){
-
-			Vue.http.get('/api/todos').then((response) => {
-		        // success callback
-		        //console.log('success');
-				commit('getTodos',response.body.result.data);
-		        
-		      }, (response) => {
-		        console.log('error');
-		      });
-		},
-		newTodo ({commit}, todo){
-			Vue.http.post('/api/addtodo', todo).then((response) => {
-		        // success callback
-		        //console.log('success');
-				commit('addTodo', todo);
-		        
-		      }, (response) => {
-		        console.log('error');
-		      });
-		},
-		toggleTodo ({commit}, todo){
-			Vue.http.post('/api/done', todo).then((response) => {
-		        // success callback
-		        //console.log('success');
-				commit('toggleTodo', todo);
-		        
-		      }, (response) => {
-		        console.log('error');
-		      });
-		},
-		deleteTodo  ({commit}, todo){
-			Vue.http.post('/api/delete', todo).then((response) => {
-		        // success callback
-		        //console.log('success');
-				commit('deleteTodo', todo);
-		        
-		      }, (response) => {
-		        console.log('error');
-		      });
-		}*/
-
-
 		fetchTodos ({commit}){
 			 const res = gtoDos.getTodos();
 			 commit('getTodos',res);
 		},
 		newTodo ({commit}, todo){
-			/*return new Promise((s,j)=>{
-				j();
-			})*/
 			idIndex++;
 			todo.id = idIndex;
-			 gtoDos.addTodo(todo);
-				commit('addTodo', todo);
+			gtoDos.addTodo(todo);
+			commit('addTodo', todo);
 		},
-		toggleTodo ({commit}, todo){
-			gtoDos.toggleTodo(todo.id);
-				commit('toggleTodo', todo);
+		toggleTodo ({commit}, item){
+			gtoDos.toggleTodo(item.id);
+			commit('toggleTodo', item);
 		},
 		deleteTodo  ({commit}, todo){
 			gtoDos.deleteTodo(todo.id);
-				commit('deleteTodo', todo);
+			commit('deleteTodo', todo);
 		},
 		editTodo ({commit}, todo){
 			gtoDos.editTodo(todo);
