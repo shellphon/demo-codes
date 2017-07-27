@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>waterfall</title>
+	<style>
+		.wrap{
+			width:90%;
+			margin: 0 auto;
+			position: relative;
+		}
+		.wrap:after{
+		   content:".";
+		   height:0;
+		   visibility:hidden;
+		   display:block;
+		   clear:both;
+		}
+		.wrap .item{
+			width: 300px;
+			border: 1px solid #333;
+			display: none;
+			position: absolute;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+		.item img{
+			width: 280px;
+			display: block;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="wrap" class="wrap"></div>
+	<script src="http://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+	<script src="./index.js"></script>
+</body>
+</html>
