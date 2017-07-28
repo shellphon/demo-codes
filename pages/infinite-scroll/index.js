@@ -53,7 +53,7 @@
 			itemHeight = 0,
 			groupHeight = 0;
 		var winHeight = $(window).height();
-		var numGroup = 20;
+		var numGroup = 40;
 
 			// 第一组数据渲染
 			testData.loadData(numGroup, function(tdata){
@@ -80,7 +80,7 @@
 			 		return;
 			 	}
 			 	stBefore = scrollTop;
-			 	if(scrollTop+winHeight>$('.group').length*groupHeight - itemHeight){
+			 	if(scrollTop+winHeight>wrap.height() - itemHeight){
 			 			//console.log('loading');
 			 			testData.loadData(numGroup, function(edata){
 				        	appendData(edata);
@@ -91,7 +91,6 @@
 
 		 function groupBetter(uIndex, dIndex){
 		 	var groups = wrap.find('.group');
-		 	
 		 	$.each(groups,function(index, group){
 		 		group = $(group);
 		 		if(index==uIndex||index==uIndex-1||index==dIndex||index==dIndex+1){
