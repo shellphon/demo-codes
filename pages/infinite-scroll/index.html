@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="http://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+	<script type="text/javascript">
+        (function(){
+            var docEl = document.documentElement,
+                tid;
+            function setSize(){
+                var rem =  docEl.clientWidth/10;
+                docEl.style.fontSize = rem + 'px'; 
+                //console.log(rem); 
+            }
+            window.addEventListener('resize', function() {
+                if(tid)clearTimeout(tid);
+                tid = setTimeout(setSize, 300);
+            }, false);
+            setSize();
+        })();
+    </script>
+   	<link rel="stylesheet" href="./index.css">
+</head>
+<body>
+	<header>主页</header>
+	<section class="content"></section>
+	<script src="./index.js"></script>
+</body>
+</html>

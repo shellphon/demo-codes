@@ -1,0 +1,52 @@
+header{
+	width: 100%;
+	height: 0.72rem;
+	background-color: #5fba7d;
+	color: #eee;
+	font-size: 0.48rem;
+	line-height: .72rem;
+	text-align: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.content{
+	margin-top: .72rem;
+	font-size: 0.32rem;
+}
+
+.item{
+	padding: 0.12rem 0.24rem;
+	border-bottom: 1px solid #333;
+	box-sizing: border-box;
+	height: 3.48rem;
+}
+
+.item img{
+	width: 3rem;
+	height: 3rem;
+}
+.item p{
+	width: 6rem;
+	text-align: left;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+
+.cf:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
