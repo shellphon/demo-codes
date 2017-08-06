@@ -86,7 +86,7 @@
 				        	appendData(edata);
 				        });
 			 	}
-		 	},200);
+		 	},30);
 		 });
 
 		 function groupBetter(uIndex, dIndex){

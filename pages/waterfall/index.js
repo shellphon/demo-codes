@@ -64,7 +64,7 @@
 			$(window).unbind('scroll.infinite');
 			begin('wrap', 300, 20, 20);
 
-		}, 200);
+		}, 20);
 	});
 
 	function begin(wrapId, itemWidth, hGap, vGap){
@@ -79,8 +79,9 @@
 			//存放每一排的单元高度数组，用于下一排的排列
 			heightArr = [],
 			curLen = 0;
+		var curHeight = 0;
 		var winHeight = $(window).height();
-		var numGroup = column * 4;
+		var numGroup = column * 10;
 
 			// 调整容器居中
 			wrap.css({left: (wrapWidth - iw*column + hGap)/2 + 'px'});
@@ -124,7 +125,7 @@
 				        	extraItems(edata);
 				        });
 			 	}
-		 	},200);
+		 	},20);
 		 });
 
 		 function groupBetter(uIndex, dIndex){
@@ -256,7 +257,11 @@
 		        cur?(heightArr[cur.index] = cur.height+vGap+height)
 		        : heightArr[i] = height;
 		    });
-		    //wrap.css({height: getMaxTop().height+200});
+		    var arrMaxTop = getMaxTop().height;
+		    if(arrMaxTop>curHeight){
+		    	curHeight = arrMaxTop;
+		    	wrap.css({height: curHeight});
+		    }
 		}
 
 		// 生成dom字符串，并添加到容器
