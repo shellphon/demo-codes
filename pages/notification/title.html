@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>你好</title>
+</head>
+<body>
+	<p>设定一个变量标志当前页面是否聚焦，绑定事件调整变量值<br>
+		要提示信息时，检测是否聚焦，否则设定定时器，频繁变动title
+	</p>
+	<p>这个闪动频率好像不由得代码控制</p>
+	<pre>
+		(function(){
+			var actived = true;
+			var intervaler = null;
+			var originTitle = document.title;
+			
+			window.onfocus = function(){
+				actived = true;
+				clearInterval(intervaler);
+				document.title = originTitle;
+				intervaler = null;
+			};
+			window.onblur = function(){
+				actived = false;
+				setTimeout(function(){
+					showTips('您有新的消息');
+				},3000);
+			};
+			function showTips(tip){
+				if(!actived){
+					tip = '【'+tip+'】';
+					intervaler = setInterval(function(){
+						if(document.title === tip){
+							document.title = '【      】';
+						}else{
+							document.title = tip;
+						}
+					},300);
+				}
+			}
+		})();
+		/*
+			// IE要用这个
+			document.onfocusin = function(){};
+			document.onfocusout = function(){};
+		*/
+	</pre>
+	<script>
+		(function(){
+			var actived = true;
+			var intervaler = null;
+			var originTitle = document.title;
+			
+			window.onfocus = function(){
+				actived = true;
+				clearInterval(intervaler);
+				document.title = originTitle;
+				intervaler = null;
+			};
+			window.onblur = function(){
+				actived = false;
+				setTimeout(function(){
+					showTips('您有新的消息');
+				},3000);
+			};
+			function showTips(tip){
+				if(!actived){
+					tip = '【'+tip+'】';
+					intervaler = setInterval(function(){
+						if(document.title === tip){
+							document.title = '【      】';
+						}else{
+							document.title = tip;
+						}
+					},300);
+				}
+			}
+		})();
+	</script>
+</body>
+</html>

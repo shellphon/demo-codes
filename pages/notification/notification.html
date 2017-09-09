@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Notification</title>
+</head>
+<body>
+	<input type="text" class="word">
+	<button class="biu">biu~</button>
+	<p>发送信息，延时桌面通知</p>
+	<pre>
+		(function(){
+			var noti = window.Notification;
+			var $word = document.querySelector('.word'),
+				$biu = document.querySelector('.biu');
+
+				$biu.onclick = function(){
+					var word = $word.value;
+					if(noti.permission!='granted'){
+						noti.requestPermission().then(function(){
+							if(noti.permission=='granted'){
+								setTimeout(function(){
+									toNotice(word);
+								},4000);
+							}else{
+								alert('请同意接收通知~');
+							}
+						});
+					}else{
+						setTimeout(function(){
+							toNotice(word);
+						},4000);
+					}
+				};
+
+			function toNotice(word){
+				var obj = null;
+				
+				obj = new noti('有人回复', {
+					body:'你刚才说的是"'+word+'"?'
+				});
+				
+				obj.onclick = function(){
+					console.log('click');
+					window.focus();
+				};
+			}
+		})();
+	</pre>
+	<script>
+		(function(){
+			var noti = window.Notification;
+			var $word = document.querySelector('.word'),
+				$biu = document.querySelector('.biu');
+
+				$biu.onclick = function(){
+					var word = $word.value;
+					if(noti.permission!='granted'){
+						noti.requestPermission().then(function(){
+							if(noti.permission=='granted'){
+								setTimeout(function(){
+									toNotice(word);
+								},4000);
+							}else{
+								alert('请同意接收通知~');
+							}
+						});
+					}else{
+						setTimeout(function(){
+							toNotice(word);
+						},4000);
+					}
+				};
+
+			function toNotice(word){
+				var obj = null;
+				
+				obj = new noti('有人回复', {
+					body:'你刚才说的是"'+word+'"?'
+				});
+				
+				obj.onclick = function(){
+					console.log('click');
+					window.focus();
+				};
+			}
+		})();
+	</script>
+</body>
+</html>
